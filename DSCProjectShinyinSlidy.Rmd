@@ -19,7 +19,7 @@ library(tm)
 library(stringr)
 library(stringi)
 library(stylo)
-setwd("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2")
+#setwd("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2")
 ```
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 shinyAppDir("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2/", options = list(width="100%", height=600))
