@@ -1,0 +1,27 @@
+---
+title: "**Data Science Capstone Project** <br><br> Predict Next Word <br><br>with Natural Language Processing <br><br> **Shiny App in Action**"
+author: "**Parag Sengupta**"
+date: "May 7, 2018"
+output: slidy_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# The Shiny App - In Action
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(shiny)
+library(shinythemes)
+library(wordcloud2)
+library(tm)
+library(stringr)
+library(stringi)
+library(stylo)
+setwd("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2")
+```
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+shinyAppDir("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2/", options = list(width="100%", height=600))
+```
+
