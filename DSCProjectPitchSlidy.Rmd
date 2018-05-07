@@ -28,13 +28,13 @@ __Build a English text prediction model under Natural Language Processing and Te
 
     + __Shiny App__ : https://paragsengupta.shinyapps.io/NextWordPrediction
 
-        + <small> Alternate App view (for Disconnected from Server error in shinyapp.io): https://github.com/paragsengupta/DSCProjectShinyinSlidy (Run the DSCProjectShinyinSlidy.Rmd file in RStudio) </small>
+        + <small> Alternate App view (for Disconnected from Server error in shinyapp.io): https://github.com/paragsengupta/NextWordPrediction (Run the DSCProjectShinyinSlidy.Rmd file in RStudio) </small>
         
     + __Pitch Slide Deck__
     
         + With Shiny App screenshot (RPres): https://rpubs.com/paragsengupta/NextWordPrediction
     
-        + With Shiny App in Action within slide (Slidy): https://github.com/paragsengupta/DSCProjectPitchSlidy
+        + With Shiny App in Action within slide (Slidy): https://github.com/paragsengupta/NextWordPrediction (Run the DSCProjectPitchSlidy.Rmd file in RStudio)
 
 
 # The Shiny App - In Action
