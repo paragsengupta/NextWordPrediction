@@ -1,0 +1,128 @@
+---
+title: "**Data Science Capstone Project** <br><br> Predict Next Word <br><br>with Natural Language Processing"
+author: "**Parag Sengupta**"
+date: "May 7, 2018"
+output: slidy_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Project Background
+
+__Build a English text prediction model under Natural Language Processing and Text Mining.__
+
+- __Goal__: Predict the next word in a sentence a user would "most likely" want to type after an initial sentence input
+
+- __Primary Use Environment__: Handheld or mobile device - _speed user typing by suggesting the next word or autocomplete user search query_
+
+- __Data Source__: 3 different corpora comprising of tweets, blog posts and news articles in English
+
+    + from Switfkey https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip
+
+- __Methodology__: 4-gram probabilistic model
+
+- __Project Links__:
+
+    + __Shiny App__ : https://paragsengupta.shinyapps.io/NextWordPrediction
+
+        + <small> Alternate App view (for Disconnected from Server error in shinyapp.io): https://github.com/paragsengupta/DSCProjectShinyinSlidy (Run the DSCProjectShinyinSlidy.Rmd file in RStudio) </small>
+        
+    + __Pitch Slide Deck__
+    
+        + With Shiny App screenshot (RPres): https://rpubs.com/paragsengupta/NextWordPrediction
+    
+        + With Shiny App in Action within slide (Slidy): https://github.com/paragsengupta/DSCProjectPitchSlidy
+
+
+# The Shiny App - In Action
+<div class = "row">
+<div class = "col-md-8">
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(shiny)
+library(shinythemes)
+library(wordcloud2)
+library(tm)
+library(stringr)
+library(stringi)
+library(stylo)
+server <- setwd("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2")
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+shinyAppDir("D:/Professional_n_Knowledge/Data Science John Hopkins/10 Data Science Capstone/FinalSub2/", options = list(width="100%", height=650))
+```
+
+</div>
+<div class = "col-md-4">
+__How the App works__
+<small><small><small>
+
+- It has 3 sections: __Predict Input and Output__, __Wordcloud Select and Output__ and __Documentation__.
+
+- User inputs a sentence in __Predict Input__ which generates the predicted set of words in __Predict Output__.
+
+- __Wordcloud__ is informative and displays 3 wordclouds depending on the user choice of 1-word, 2-words or 3-words.
+
+    + Hovering mouse over a word in Wordcloud shows occurrence frequency
+    
+- __Documentation__ displays the __Description and Methodology__ of the project.
+
+</small></small></small>
+
+__Performance Notes__
+<small><small><small>
+
+- RAM limitations addressed by using ~10% of dataset for the model
+
+- Prediction process expedited by removing sparse entries from generated N-Grams
+
+- Prediction Accuracy ~14% using the DSCI benchmark
+
+</small></small></small>
+
+</div>
+</div>
+
+
+# Model Building - Preprocessing and N-Grams
+
+__Preprocessing__
+
+- Preprocessing and cleaning of loaded data
+    + Removing Numbers, Removing Puntuations, Removing Foreign characters, Removing extra white spaces, Converting to lower case, Profanity Filtering
+- Tokenization of text into words, phrases, symbols, etc. for parsing, text mining, etc.
+- Processed data stored in the form of a VCorpus, Plain Text Document and a Term Document Matrix required for text mining applications
+
+__N-Grams__
+
+- Generate N-Grams and their frequencies from the cleaned processed data
+- Store N-Grams in the respective unigrams, bigrams, trigrams, quadgrams data frames with each row containing Frequency, Term and X1, X2 ... Xn  where Xi represents the ith word in the Term.
+- Memory managed by removing occurrence frequencies < 5 to cope with Shiny app file upload limits and speed up
+- Calculate N-Gram counts using Term Frequency function
+- Assign probabilities to the N-Grams using simple linear interpolation with dummy lambda values
+
+# Model Building - Probabilities and Prediction
+
+__Probability Formulae Used__
+
+- __Maximum Likelihood Estimates__
+
+<small>
+(a) Quadgram ML Estimate (b) Trigram ML Estimate (c) Bigram ML Estimate (d) Unigram ML Estimate
+</small>
+
+- __Linear Interpolation__
+
+- __New Estimate__ = Weighted Average of the three Maximum Likelihood Estimates
+
+__Prediction__
+
+- Input string from user input preprocessed using the same method as the train data
+- Processed input string passed to the predict function where the last 3 words are extracted and matched with the 4-gram table
+    + If a match, 4-gram with maximum probability is returned. Otherwise, last 2 words extracted and matched with 3-gram table
+    + If a match, 3-gram with maximum probability is returned. Otherwise, last word extracted and matched with 2-gram table
+    + If a match, 2-gram with maximum probability is returned. Otherwise, Unigram with maximum probability is returned
+
